@@ -7,18 +7,25 @@ const CommentSchema = new Schema({
       ref: 'User',
       required: true
    },
-   post: {
+   category: {
       type: Schema.Types.ObjectId,
-      ref: 'Post',
+      ref: 'Categories',
       required: true
    },
-   comment: {
+   title: {
       type: String,
       required: true
    },
-   datetime: { type : Date, default: Date.now }
+   description: {
+      type: String,
+      required: true
+   },
+   image: {
+      type: String,
+      required: true
+   }
 });
 
-const Comment = mongoose.model('Comment', CommentSchema);
+const Products = mongoose.model('Products', CommentSchema);
 
-module.exports = Comment;
+module.exports = Products;

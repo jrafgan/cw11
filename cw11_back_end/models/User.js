@@ -27,6 +27,14 @@ const UserSchema = new Schema({
     token: {
         type: String,
         required: true
+    },
+    displayName: {
+        type: String,
+        required: true
+    },
+    phoneNumber: {
+        type: String,
+        required: true
     }
 });
 

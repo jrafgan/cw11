@@ -1,15 +1,21 @@
 import React, {Component} from 'react';
 import FormElement from "../components/UI/FormElement";
 import {connect} from "react-redux";
-import {createPost} from "../store/actions/postActions";
+import {createProduct, getCategories} from "../store/actions/productActions";
 
-class NewPost extends Component {
+class NewProduct extends Component {
 
     state = {
         title: '',
         description: '',
+        category: '',
+        price: null,
         image: null,
     };
+
+    componentDidMount() {
+        this.props.getCategories();
+    }
 
     inputChangeHandler = e => {
         this.setState({
@@ -17,18 +23,27 @@ class NewPost extends Component {
         })
     };
 
+    selectChangeHandler = e => {
+        console.log('category ; ', e.target.value);
+        this.setState({
+            category: e.target.value
+        });
+    };
+
     submitFormHandler = e => {
         e.preventDefault();
 
-        const formData = new FormData();
-
-        Object.keys(this.state).forEach(key => {
-            if (this.state[key] !== null) {
-                formData.append(key, this.state[key]);
-            }
-        });
-
-        this.props.onSubmit(formData);
+        if (this.state.image) {
+            const formData = new FormData();
+            Object.keys(this.state).forEach(key => {
+                if (this.state[key] !== null) {
+                    formData.append(key, this.state[key]);
+                }
+            });
+            this.props.onSubmit(formData);
+        } else {
+            this.props.onSubmit(this.state)
+        }
     };
 
     getFieldError = fieldName => {
@@ -43,22 +58,37 @@ class NewPost extends Component {
 
     render() {
         return (
-            <div className="main_comment_div">
+            <div className="product_add_div">
                 <div className="comment_div">
-                    <h2>Post</h2>
+                    <h2>Product</h2>
                     {this.props.error &&
                     <div className="alert">
                         {this.props.error.error || this.props.error.global}
                     </div>}
                     <form onSubmit={this.submitFormHandler} className="form">
+                        <label htmlFor="category">Category</label>
+                        <select id="category" onChange={this.selectChangeHandler} required>
+                            <option value=''>--Choose category--</option>
+                            {this.props.categories ? this.props.categories.map(item => {
+                                return <option value={item._id} key={item._id}>{item.title}</option>
+                            }) : null}
+                        </select>
                         <FormElement
                             propertyName="title"
                             title="Title"
                             type="text"
                             value={this.state.title}
                             onChange={this.inputChangeHandler}
-                            placeholder="Enter username you registered with"
-                            autocomplete="current-username"
+                            placeholder="Enter product title"
+                            error={this.getFieldError('title')}
+                        />
+                        <FormElement
+                            propertyName="price"
+                            title="Price"
+                            type="number"
+                            value={this.state.price}
+                            onChange={this.inputChangeHandler}
+                            placeholder="Enter product price"
                             error={this.getFieldError('title')}
                         />
                         <label htmlFor="description">Description</label>
@@ -88,11 +118,13 @@ class NewPost extends Component {
 }
 
 const mapStateToProps = state => ({
+    categories: state.products.categories,
     error: state.users.loginError,
 });
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: formData => dispatch(createPost(formData))
+    getCategories: () => dispatch(getCategories()),
+    onSubmit: formData => dispatch(createProduct(formData))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPost);
+export default connect(mapStateToProps, mapDispatchToProps)(NewProduct);

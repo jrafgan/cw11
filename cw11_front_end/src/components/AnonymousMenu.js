@@ -4,11 +4,11 @@ import {NavLink} from "react-router-dom";
 const AnonymousMenu = () => (
     <div className="anonymous_menu">
         <div>
-            <NavLink to="/register" exact>Регистрация</NavLink>
+            <NavLink to="/register" exact>Register</NavLink>
         </div>
 
         <div>
-            <NavLink to="/login" exact>Войти</NavLink>
+            <NavLink to="/login" exact>Enter</NavLink>
         </div>
     </div>
 );

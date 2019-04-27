@@ -6,11 +6,11 @@ const UserMenu = ({user, logout}) => {
     return (
         <div className="user_menu">
             <div>
-                Привет, {user.username}!
+                Hello, {user.username}!
             </div>
             <div className="user_menu">
-                <NavLink to="/add_post" exact>Добавить пост</NavLink>
-                <NavLink onClick={logout} to="/" exact>Выйти</NavLink>
+                <NavLink to="/add_product" exact>Add product</NavLink>
+                <NavLink onClick={logout} to="/" exact>Exit</NavLink>
             </div>
         </div>)
 };

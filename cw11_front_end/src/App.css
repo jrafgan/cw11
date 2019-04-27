@@ -1,5 +1,6 @@
 .App {
   display: grid;
+  grid-template-columns: 20% auto;
   height: 100%;
   width: 100%;
 }
@@ -73,7 +74,7 @@
 
 .main_register_div,
 .main_login_div,
-.main_comment_div,
+.product_add_div,
 .comment_form_div {
   display: grid;
 }
@@ -93,4 +94,21 @@
 
 .post_text_div {
   grid-column: 2 / 4;
+}
+
+.categories_div {
+  display: grid;
+  grid-template-columns: auto;
+  grid-row-gap: 20px;
+  text-align: left;
+}
+
+.product_thumbnail_div {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  grid-gap: 20px;
+}
+
+.product_thumbnail {
+  padding: 10px;
 }

@@ -8,7 +8,7 @@ const ImgThumbnail = props => {
         image = apiURL + '/uploads/' + props.image;
     }
 
-    return <img src={image} className='img_thumbnail' alt='Artist' />
+    return <img src={image} className='img_thumbnail' alt={props.alt} />
 };
 
 export default ImgThumbnail;

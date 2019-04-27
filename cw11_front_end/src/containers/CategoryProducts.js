@@ -1,37 +1,29 @@
 import React, {Component} from 'react';
-import '../App.css'
-import {getCategories, getPosts, getProducts} from "../store/actions/productActions";
 import connect from "react-redux/es/connect/connect";
 import ImgThumbnail from "../components/UI/ImgThumbnail";
-import {NavLink} from "react-router-dom";
+import {createComment, getCategories, getProducts, getProductsByCategory} from "../store/actions/productActions";
 import ProductThumbnail from "../components/UI/ProductThumbnail";
+import {NavLink} from "react-router-dom";
 
+class CategoryProducts extends Component {
 
-class Main extends Component {
+    state = {
+        comment: '',
+    };
 
     componentDidMount() {
+        const id = this.props.match.params.id;
+        this.props.getProducts(id);
         this.props.getCategories();
-        this.props.getProducts();
     }
 
-    getAlbums = e => {
-        console.log(e.target);
+    getProducts = () => {
+        const id = this.props.match.params.id;
+        this.props.getProducts(id);
     };
 
-    selectChangeHandler = e => {
-        this.setState({
-            [e.target.id]: e.target.value
-        });
-    };
-
-    inputChange = (e) => {
-        this.setState({[e.target.name]: e.target.value})
-    };
-
-    fileChangeHandler = event => {
-        this.setState({
-            [event.target.name]: event.target.files[0]
-        });
+    getFieldError = fieldName => {
+        return this.props.error && this.props.error.errors && this.props.error.errors[fieldName] && this.props.error.errors[fieldName].message;
     };
 
     render() {
@@ -40,7 +32,7 @@ class Main extends Component {
                 <div className="categories_div">
                     <p>Categories</p>
                     {this.props.categories ? this.props.categories.map(item => <NavLink to={"/category/" + item._id}
-                                                                                        key={item._id}>{item.title}</NavLink>
+                                                                                        key={item._id} onClick={this.getProducts}>{item.title}</NavLink>
                     ) : null}
                 </div>
                 <div className="product_thumbnail_div">
@@ -53,20 +45,19 @@ class Main extends Component {
                         price={item.price}
                     />) : null}
                 </div>
-
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    categories: state.products.categories,
     products: state.products.products,
+    categories: state.products.categories,
 });
 
 const mapDispatchToProps = dispatch => ({
+    getProducts: categoryId => dispatch(getProductsByCategory(categoryId)),
     getCategories: () => dispatch(getCategories()),
-    getProducts: () => dispatch(getProducts()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryProducts);

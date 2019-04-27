@@ -4,13 +4,13 @@ import {connectRouter, routerMiddleware} from "connected-react-router";
 import usersReducer from "./reducers/usersReducer";
 import thunkMiddleware from "redux-thunk";
 import {loadFromLocalStorage, saveToLocalStorage} from "./localStorage";
-import postReducer from "./reducers/postReducer";
+import productReducer from "./reducers/productReducer";
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
     router: connectRouter(history),
-    posts: postReducer,
+    products: productReducer,
     users: usersReducer,
 });
 

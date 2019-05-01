@@ -14,16 +14,6 @@ class Main extends Component {
         this.props.getProducts();
     }
 
-    getAlbums = e => {
-        console.log(e.target);
-    };
-
-    selectChangeHandler = e => {
-        this.setState({
-            [e.target.id]: e.target.value
-        });
-    };
-
     inputChange = (e) => {
         this.setState({[e.target.name]: e.target.value})
     };

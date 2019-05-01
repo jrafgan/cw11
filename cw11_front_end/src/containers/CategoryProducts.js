@@ -32,7 +32,7 @@ class CategoryProducts extends Component {
                 <div className="categories_div">
                     <p>Categories</p>
                     {this.props.categories ? this.props.categories.map(item => <NavLink to={"/category/" + item._id}
-                                                                                        key={item._id} onClick={this.getProducts}>{item.title}</NavLink>
+                                                                                        key={item._id} >{item.title}</NavLink>
                     ) : null}
                 </div>
                 <div className="product_thumbnail_div">
